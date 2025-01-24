@@ -1,14 +1,14 @@
 services:
-  mysql-cli:
+  mysql8-cli:
     image: mysql:8.0
-    container_name: mysql-cli
+    container_name: mysql8-cli
     working_dir: /
     command: /bin/bash
     env_file: 
       - ./config/mysql/.env
     volumes:
-      - ./volumes/mysql/backup:/backup
-      - ./volumes/mysql/shared:/shared
+      - ./volumes/mysql8/backup:/backup
+      - ./volumes/mysql8/shared:/shared
   redis-cli:
     image: redis
     container_name: redis-cli
@@ -27,5 +27,5 @@ services:
     env_file:
       - ./config/postgres/.env.exemple
     volumes:
-      - ./volumes/postgres/backup:/backup
-      - ./volumes/postgres/shared:/shared
+      - ./volumes/postgres13/backup:/backup
+      - ./volumes/postgres13/shared:/shared
