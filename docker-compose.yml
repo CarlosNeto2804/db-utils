@@ -20,12 +20,12 @@ services:
       - ./volumes/redis/backup:/backup
       - ./volumes/redis/shared:/shared
   postgres13-cli:
-    image: postgres:13
-    container_name: postgres13-cli
-    working_dir: /
-    command: /bin/bash
-    env_file:
-      - ./config/postgres/.env.exemple
-    volumes:
-      - ./volumes/postgres13/backup:/backup
-      - ./volumes/postgres13/shared:/shared
+   image: postgres:13
+   container_name: postgres13-cli
+   working_dir: /
+   command: /bin/bash
+   env_file:
+     - ./config/postgres/.env.exemple
+   volumes:
+     - ./volumes/postgres13/backup:/backup
+     - ./volumes/postgres13/shared:/shared
