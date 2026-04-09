@@ -2,3 +2,4 @@ volumes/*
 scripts/*
 .env
 .idea
+exports/*
