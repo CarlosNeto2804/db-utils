@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Roda mysqldump (docs/mysqldump.md) ao subir o container, se DUMP_MYSQL_HOST estiver definido.
-if [[ -z "${DUMP_MYSQL_HOST:-}" || -z "${DUMP_MYSQL_DATABASE:-}" ]]; then
-  echo "DUMP_MYSQL_HOST ou DUMP_MYSQL_DATABASE vazio: pulando mysqldump automático."
+# Roda mysqldump (docs/mysqldump.md) de todos os bancos ao subir, se DUMP_MYSQL_HOST estiver definido.
+if [[ -z "${DUMP_MYSQL_HOST:-}" ]]; then
+  echo "DUMP_MYSQL_HOST vazio: pulando mysqldump automático."
   exec /bin/bash "$@"
 fi
 
@@ -11,7 +11,7 @@ fi
 : "${DUMP_MYSQL_PASSWORD:?DUMP_MYSQL_PASSWORD obrigatório para o dump automático}"
 DUMP_MYSQL_PORT="${DUMP_MYSQL_PORT:-3306}"
 
-out="${DUMP_MYSQL_OUTPUT:-/backup/${DUMP_MYSQL_DATABASE}.sql}"
+out="${DUMP_MYSQL_OUTPUT:-/backup/all-databases.sql}"
 wait_max="${DUMP_WAIT_MAX_SECONDS:-120}"
 
 export MYSQL_PWD="$DUMP_MYSQL_PASSWORD"
@@ -34,7 +34,7 @@ mysqldump \
   --port="$DUMP_MYSQL_PORT" \
   --user="$DUMP_MYSQL_USER" \
   -p \
-  --databases "$DUMP_MYSQL_DATABASE" \
+  --all-databases \
   --single-transaction \
   --quick \
   --skip-lock-tables \
@@ -49,7 +49,7 @@ mysqldump \
   --hex-blob \
   --extended-insert \
   --set-charset \
-  --verbose >"/backup/${DUMP_MYSQL_HOST}.sql"
+  --verbose >"$out"
 
 echo "Dump concluído."
 unset MYSQL_PWD
