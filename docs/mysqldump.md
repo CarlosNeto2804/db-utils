@@ -10,7 +10,7 @@ mysqldump \
     --port="$DUMP_MYSQL_PORT" \
     --user="$DUMP_MYSQL_USER" \
     -p \
-    --databases keycloakqa \
+    --databases <db-name> \
     --single-transaction \
     --quick \
     --skip-lock-tables \
@@ -23,8 +23,9 @@ mysqldump \
     --default-character-set=utf8mb4 \
     --column-statistics=0 \
     --hex-blob \
-    --order-by-primary \
-    --verbose  > database_name.sql
+    --extended-insert \
+    --set-charset \
+    --verbose > database_name.sql
 ```
 
 ## Dump a database
