@@ -1,12 +1,13 @@
 services:
-  mysql8-cli:
+  mysql:
     image: mysql:8.0
     container_name: mysql8-cli
     working_dir: /
-    command: /bin/bash
+    entrypoint: ["/bin/bash", "/usr/local/bin/mysql-dump-on-start.sh"]
     env_file:
       - ./config/mysql/.env
     volumes:
+      - ./docker/mysql/mysql-dump-on-start.sh:/usr/local/bin/mysql-dump-on-start.sh:ro
       - ./volumes/mysql8/backup:/backup
       - ./volumes/mysql8/shared:/shared
   redis-cli:
